@@ -1,5 +1,6 @@
 import React from 'react';
 import {notFound} from "next/navigation";
+import Link from 'next/link';
 
 type Props = {
   params: {
@@ -7,12 +8,34 @@ type Props = {
   }
 }
 
+export const generateMetadata = ({ params }: Props) => {
+  return {
+    title: `${params.slug} 제품`
+  }
+}
+
 const ProductPage = ({ params }: Props) => {
   if (params.slug === 'nothing') {
     notFound();
   }
+  const PRODUCT_URL = `/product/${params.slug}`;
   return (
-    <h1>{params.slug}바지 제품 설명 페이지</h1>
+    <ul>
+      <li>
+        <Link href={`${PRODUCT_URL}/pants`}>pants</Link>
+      </li>
+      <li>
+        <Link href={`${PRODUCT_URL}/skirts`}>skirts</Link>
+      </li>
+      <li>
+        <Link href={`${PRODUCT_URL}/shirts`}>shirts</Link>
+      </li>
+      <li>
+        <Link href={`${PRODUCT_URL}/shoes`}>shoes</Link>
+      </li>
+    </ul>
+
+
   );
 };
 
@@ -20,7 +43,7 @@ const ProductPage = ({ params }: Props) => {
  * Return a list of `params` to populate the [slug] dynamic segment
  */
 export const generateStaticParams = () => {
-  const products = ['pants', 'skirt'];
+  const products = ['man', 'woman'];
   return products.map((product) => ({
     slug: product,
   }));
