@@ -3,7 +3,7 @@ import {notFound} from "next/navigation";
 import Link from 'next/link';
 import { getProduct, getProducts } from '@/service/product';
 
-export const revalidate = 3;
+// export const revalidate = 3;
 
 type Props = {
   params: {
@@ -19,6 +19,7 @@ export const generateMetadata = ({ params }: Props) => {
 
 const ProductPage = async ({ params: {slug} }: Props) => {
   const product = await getProduct(slug);
+
   if (!product) {
     notFound();
   }
