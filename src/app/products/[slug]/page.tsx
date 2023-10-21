@@ -1,8 +1,8 @@
 import React from 'react';
-import {notFound} from "next/navigation";
-import Link from 'next/link';
+import {notFound, redirect} from "next/navigation";
 import { getProduct, getProducts } from '@/service/product';
-
+import Image from "next/image";
+import Button from "@/components/Button";
 // export const revalidate = 3;
 
 type Props = {
@@ -21,10 +21,25 @@ const ProductPage = async ({ params: {slug} }: Props) => {
   const product = await getProduct(slug);
 
   if (!product) {
-    notFound();
+    redirect('/products');
+    // notFound();
   }
 
-  return <h1>{product.name} 제품 설명 페이지</h1>
+  const { name } = product;
+
+  return (
+    <>
+      <h1>{name} 제품 설명 페이지</h1>
+      <Image
+        src={`/images/${product.image}`}
+        alt={name}
+        width='300'
+        height='300'
+      />
+      <Button />
+    </>
+
+  )
 };
 
 /**
